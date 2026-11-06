@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Prisilla, With Love</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .mom-details .expandable-content,
+    .prayer-details .expandable-content {
+      position: relative;
+      padding: 34px 34px 38px !important;
+      background: repeating-linear-gradient(to bottom, #fffdf9 0, #fffdf9 37px, #efdce0 38px, #fffdf9 39px) !important;
+      color: #57434e !important;
+      font: 500 1.3rem/1.82 "Caveat", cursive !important;
+      letter-spacing: .015em;
+    }
+    .mom-details .expandable-content p,
+    .prayer-details .expandable-content p { max-width: 620px; margin: 0 auto 18px; }
+    .mom-details .expandable-content:before { content: "with gratitude ♡"; position: absolute; top: 16px; right: 22px; color: #d98ca2; font: 500 1rem "Caveat", cursive; transform: rotate(5deg); }
+    .prayer-details .expandable-content:before { content: "a blessing for you ✦"; position: absolute; top: 16px; right: 22px; color: #d59a63; font: 500 1rem "Caveat", cursive; transform: rotate(-5deg); }
+    .mom-details .mom-signoff,
+    .prayer-details .prayer-signoff { margin-top: 30px !important; color: #a84769 !important; font: 600 1.8rem/1.25 "Caveat", cursive !important; text-align: right; }
+    .expandable[open] summary .summary-copy { transform: none !important; }
+    .expandable[open] summary .summary-seal { transform: rotate(45deg) scale(.8) !important; }
+    .effect-card { overflow: hidden; text-align: left; }
+    .effect-card .effect-message { position: relative; z-index: 1; max-height: 0; margin: 0; overflow: hidden; opacity: 0; color: #f9dfe6; font: 400 .88rem/1.65 "DM Sans", sans-serif; transition: max-height .55s var(--ease), margin .4s var(--ease), opacity .35s ease; }
+    .effect-card.active { min-height: 290px; }
+    .effect-card.active .effect-message { max-height: 170px; margin: 20px 0 0; opacity: 1; }
+    .effect-card.active strong { margin-top: 44px; }
+    @media (max-width: 760px) { .effect-card.active { min-height: 245px; } }
+    @media (max-width: 600px) {
+      .letter-card { transform: none !important; }
+      .mom-details .expandable-content, .prayer-details .expandable-content { padding: 29px 20px 34px !important; font-size: 1.2rem !important; line-height: 1.75 !important; }
+    }
+    /* Responsive layout pass: fluid from 320px phones to 4K screens. */
+    :root { --page-gutter: clamp(16px, 4vw, 64px); }
+    html, body { max-width: 100%; overflow-x: hidden; }
+    main, section, header, footer, div { min-width: 0; }
+    img, video, iframe, svg { display: block; max-width: 100%; height: auto; }
+    .section { width: 100%; padding-left: var(--page-gutter); padding-right: var(--page-gutter); }
+    .letter-section, .memories-section, .music-section, .prayer-section, .finale-section { padding-left: var(--page-gutter); padding-right: var(--page-gutter); }
+    .hero h1, .section h2 { overflow-wrap: break-word; }
+    button, .primary, .site-nav a, .site-nav .nav-mark { min-width: 44px; min-height: 44px; }
+    .primary, .site-nav a, .site-nav .nav-mark { display: inline-flex; align-items: center; }
+    .video-wrap { width: 100%; max-width: 760px; aspect-ratio: 16 / 9; }
+    .reasons-grid, .effect-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .effect-card, .reason-card { width: 100%; min-width: 0; }
+    @media (max-width: 980px) {
+      .reasons-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .effect-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .effect-card:last-child { grid-column: 1 / -1; }
+      .hero-orbit { right: 8%; }
+    }
+    @media (max-width: 640px) {
+      .site-nav { width: calc(100% - 20px); padding: 6px 8px 6px 13px; }
+      .site-nav nav { flex: 1; justify-content: flex-end; gap: clamp(4px, 2.5vw, 12px); }
+      .site-nav nav a { padding: 0 3px; font-size: clamp(.5rem, 2.2vw, .62rem); letter-spacing: .06em; }
+      .hero { min-height: 92svh; padding-top: 100px; }
+      .hero-stamp { top: 96px; right: 5%; }
+      .hero h1 { font-size: clamp(3.2rem, 16vw, 5.6rem); }
+      .hero-copy { max-width: 34ch; font-size: clamp(.9rem, 3.8vw, 1rem); }
+      .section { padding-top: clamp(68px, 15vw, 100px); padding-bottom: clamp(68px, 15vw, 100px); }
+      .section h2 { font-size: clamp(2.35rem, 12vw, 4rem); }
+      .reasons-grid, .effect-grid { grid-template-columns: 1fr; }
+      .effect-card:last-child { grid-column: auto; }
+      .reason-card { min-height: 160px; }
+      .reason-card strong { margin-top: 28px; }
+      .gallery { display: flex; flex-direction: column; }
+      .photo, .photo-one { min-height: clamp(170px, 48vw, 240px); }
+      .letter-card { width: 100%; margin-left: 0; margin-right: 0; padding: 10px; }
+      .letter-details summary, .mom-details summary, .prayer-details summary { padding: 24px 20px !important; }
+      .summary-copy strong { font-size: clamp(1.15rem, 6vw, 1.6rem); }
+      .summary-copy small { max-width: 22ch; line-height: 1.4; }
+      .summary-seal { right: 18px; bottom: -18px; width: 44px; height: 44px; }
+      .love-counter { margin-top: 34px; padding: 24px 18px; }
+      .counter-button { width: 100%; justify-content: center; }
+      .effect-card.active { min-height: 0; }
+      .effect-card.active .effect-message { max-height: 260px; }
+      .video-wrap { border-radius: 12px; }
+    }
+    @media (min-width: 1600px) {
+      .section { max-width: 1320px; }
+      .letter-section, .memories-section, .music-section, .prayer-section, .finale-section { padding-left: max(var(--page-gutter), calc((100% - 1320px) / 2)); padding-right: max(var(--page-gutter), calc((100% - 1320px) / 2)); }
+    }
+    /* Refined palette balance: plum and ivory lead; rose is reserved for emphasis. */
+    .reason-card:hover, .reason-card.active { background: linear-gradient(145deg, #49314b, #2b2030); box-shadow: 0 20px 35px #2b203044; }
+    .reason-card:hover span, .reason-card.active span { color: #f1b0c2; }
+    .reason-card:hover small, .reason-card.active small { color: #d9c2d0; }
+    .quiz-options button:hover { color: #fff; background: #49314b; border-color: #49314b; }
+    .counter-button:hover { background: #49314b; border-color: #49314b; }
+    .surprises-section { background: #f1e2df; }
+    .open-when-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 15px; }
+    .open-when-card { min-height: 190px; padding: 23px; border: 1px solid #dfc4c8; border-radius: 18px; background: #fffaf7; box-shadow: 0 12px 30px #6b3e4b0d; transition: transform .35s var(--ease), background .35s ease; }
+    .open-when-card:hover, .open-when-card[open] { color: #fff; background: #49314b; transform: translateY(-6px); }
+    .open-when-card summary { display: flex; flex-direction: column; gap: 12px; min-height: 140px; cursor: pointer; list-style: none; }
+    .open-when-card summary::-webkit-details-marker { display: none; }
+    .open-when-card summary span { color: var(--rose-dark); font-size: 1.5rem; }
+    .open-when-card summary strong { margin-top: auto; font: 1.25rem "Playfair Display", serif; }
+    .open-when-card summary small { color: var(--muted); font-size: .66rem; letter-spacing: .12em; text-transform: uppercase; }
+    .open-when-card[open] summary span, .open-when-card[open] summary small { color: #ffb4c7; }
+    .open-when-card p { margin: 18px 0 0; color: #f4dfe5; font: 1.12rem/1.55 "Caveat", cursive; animation: expandIn .45s var(--ease); }
+    .promise-panel { display: grid; grid-template-columns: .8fr 1.2fr; gap: 35px; margin-top: 45px; padding: clamp(25px, 5vw, 48px); color: #fff; border-radius: 22px; background: #3d2940; }
+    .promise-panel h3 { margin: 12px 0 0; font: 2rem "Playfair Display", serif; }
+    .promise-panel ul { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
+    .promise-panel li { padding-left: 25px; color: #ead8df; line-height: 1.55; position: relative; }
+    .promise-panel li:before { content: "♥"; position: absolute; left: 0; color: #ff9eb9; }
+    .surprise-tools { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 15px; margin-top: 15px; }
+    .affirmation-tool, .wish-tool { padding: 25px; border: 1px solid #dfc4c8; border-radius: 18px; background: #fffaf7; }
+    .tool-label { display: block; color: var(--rose-dark); font-size: .62rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+    .affirmation-tool strong, .wish-tool strong { display: block; min-height: 52px; margin: 15px 0; font: 1.28rem/1.35 "Playfair Display", serif; }
+    .tool-button { min-height: 44px; padding: 11px 16px; color: var(--rose-dark); border: 1px solid #dfa8b7; border-radius: 999px; background: transparent; font-size: .72rem; font-weight: 700; cursor: pointer; transition: .25s ease; }
+    .tool-button:hover { color: #fff; background: var(--rose-dark); }
+    @media (max-width: 760px) { .open-when-grid, .surprise-tools { grid-template-columns: 1fr; } .promise-panel { grid-template-columns: 1fr; gap: 20px; } }
+    @media (max-width: 430px) { .open-when-card { min-height: 165px; } .promise-panel h3 { font-size: 1.65rem; } }
+    /* Warmer background balance for stronger contrast. */
+    :root { --cream: #f4e8e4; --paper: #fff9f5; --blush: #f2dde2; }
+    body { background: var(--cream); }
+    .hero { background: radial-gradient(circle at 50% 40%, #f9d9df 0, #f7e7e1 30%, var(--cream) 68%); }
+    .letter-section { background: var(--blush); }
+  </style>
+</head>
+<body>
+  <div class="scroll-progress" id="scrollProgress"></div>
+  <div class="hearts" aria-hidden="true"></div>
+  <header class="site-nav">
+    <a class="nav-mark" href="#top" aria-label="Back to the beginning"><span>B</span><i>♥</i><span>P</span></a>
+    <nav>
+      <a href="#letter">Letter</a>
+      <a href="#effect">Story</a>
+      <a href="#prayer">Prayer</a>
+      <a href="#wish">Wish</a>
+    </nav>
+  </header>
+  <main>
+    <section class="hero section" id="top">
+      <div class="hero-stamp">BIRTHDAY EDITION <span>№ 01</span></div>
+      <p class="eyebrow">A little birthday surprise</p>
+      <h1>Happy birthday,<br><span>Prisilla</span> <span class="heart">♥</span></h1>
+      <p class="hero-copy">Today the world celebrates you, but I get to celebrate how lucky I am to love you.</p>
+      <button class="primary" id="openSurprise">Open your surprise <span>→</span></button>
+      <div class="hero-orbit" aria-hidden="true"><span>♥</span><span>✦</span><span>♡</span></div>
+      <p class="scroll-hint">scroll down, birthday girl ↓</p>
+    </section>
+
+    <div class="love-ticker" aria-label="A message from Brighton"><div><span>YOUR SMILE</span><b>✦</b><span>YOUR HEART</span><b>✦</b><span>YOUR AMBITION</span><b>✦</b><span>YOUR LOVE</span><b>✦</b><span>YOUR SMILE</span><b>✦</b><span>YOUR HEART</span><b>✦</b></div></div>
+
+    <section class="section letter-section" id="letter">
+      <div class="section-label">01 / A letter for you</div>
+      <div class="letter-card">
+        <details class="expandable letter-details">
+          <summary><span class="summary-copy"><b class="summary-kicker">A private note from Brighton</b><strong>Open your birthday letter</strong><small>Written especially for Prisilla · tap to unfold</small></span><span class="summary-seal">♥</span></summary>
+          <div class="expandable-content">
+            <p class="letter-date">For Prisilla · with love</p>
+            <p class="script">My dearest Prisilla,</p>
+            <p>You make ordinary days feel like something worth remembering. Your beautiful smile, your heart, and your lovely little ways of being yourself are some of the things I treasure most.</p>
+            <p>I admire how dedicated you are to school and how you always aim for the top. Your determination inspires me, and I know you are capable of achieving so many amazing things.</p>
+            <p>I still don’t know what makes you love me this much, but I want you to know that I truly appreciate it. Your love means more to me than I can properly explain.</p>
+            <p>On your birthday, I hope you feel as loved, special, and unforgettable as you truly are. Thank you for being my favorite person to laugh with, tease, and love.</p>
+            <p class="script signoff">Always yours,<br>Brighton ♥</p>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <section class="section reasons-section" id="story">
+      <div class="section-label">02 / Tap to reveal</div>
+      <h2>Reasons you are<br><em>my favorite</em></h2>
+      <div class="reasons-grid">
+        <button class="reason-card"><span>01</span><strong>Your smile</strong><small>tap me</small><p>It can turn even my longest day around.</p></button>
+        <button class="reason-card"><span>02</span><strong>Your dedication</strong><small>tap me</small><p>You work hard at school and never stop aiming higher.</p></button>
+        <button class="reason-card"><span>03</span><strong>Your ambition</strong><small>tap me</small><p>I love watching you chase your goals and believe in your future.</p></button>
+        <button class="reason-card"><span>04</span><strong>Your love</strong><small>tap me</small><p>I may not know why you love me so much, but I appreciate it every day.</p></button>
+      </div>
+      <div class="love-counter" aria-live="polite">
+        <div class="counter-top"><span id="reasonCount">01</span><span>of many reasons</span></div>
+        <p id="randomReason">Your smile has a way of making everything feel lighter.</p>
+        <button class="counter-button" id="reasonButton"><span>♥</span> Give me another reason</button>
+      </div>
+    </section>
+
+    <section class="section effect-section" id="effect">
+      <div class="section-label">03 / The Prisilla effect</div>
+      <div class="effect-heading"><h2>What happens<br>when you <em>arrive</em></h2><p>A completely scientific study by Brighton.</p></div>
+      <div class="effect-grid">
+        <button class="effect-card" data-effect="When you arrive, everything feels a little brighter. Your smile changes the atmosphere, your presence makes people feel comfortable, and somehow an ordinary place starts feeling like somewhere I want to be."><span>01</span><strong>The room</strong><i>✦</i><p class="effect-message"></p></button>
+        <button class="effect-card" data-effect="You have a beautiful way of making simple moments feel important. A conversation, a laugh, or even a quiet moment becomes something I want to remember because it happened with you."><span>02</span><strong>The moment</strong><i>♡</i><p class="effect-message"></p></button>
+        <button class="effect-card" data-effect="My heart becomes calmer and happier around you. I admire your smile, your dedication, your ambition, and the love you give me. You are not just someone I love—you are someone I am grateful to know."><span>03</span><strong>My heart</strong><i>♥</i><p class="effect-message"></p></button>
+      </div>
+    </section>
+
+    <section class="section quiz-section">
+      <div class="section-label">04 / A very serious quiz</div>
+      <h2>Who is the<br><em>birthday queen?</em></h2>
+      <p class="quiz-question" id="quizQuestion">Who is the most beautiful girl in the world?</p>
+      <div class="quiz-options">
+        <button data-answer="wrong">My girlfriend</button>
+        <button data-answer="right">Prisilla, obviously</button>
+        <button data-answer="wrong">The birthday queen</button>
+      </div>
+      <p class="quiz-result" id="quizResult"></p>
+    </section>
+
+    <section class="section surprises-section" id="surprises">
+      <div class="section-label">05 / Little surprises</div>
+      <h2>For every kind<br>of <em>day</em></h2>
+      <div class="open-when-grid">
+        <details class="open-when-card"><summary><span>♡</span><strong>Open when you miss me</strong><small>tap to open</small></summary><p>Close your eyes and remember that somewhere in this world, Brighton is thinking about you, smiling because he gets to call you his girl.</p></details>
+        <details class="open-when-card"><summary><span>✦</span><strong>Open when you need courage</strong><small>tap to open</small></summary><p>You are dedicated, capable, and stronger than you think. Keep aiming for the top, Prisilla. I will always be cheering for you.</p></details>
+        <details class="open-when-card"><summary><span>♥</span><strong>Open when you need a smile</strong><small>tap to open</small></summary><p>Official reminder: you are beautiful, loved, and completely unforgettable. Also, your boyfriend thinks you are very cute. That is all.</p></details>
+      </div>
+      <div class="promise-panel"><div><span class="eyebrow">A few promises from Brighton</span><h3>I will keep choosing you.</h3></div><ul><li>To support your dreams and celebrate every victory.</li><li>To make you laugh, even when the day is difficult.</li><li>To keep learning the beautiful person you are.</li></ul></div>
+      <div class="surprise-tools">
+        <div class="affirmation-tool"><span class="tool-label">Today’s reminder</span><strong id="affirmationText">You are deeply loved.</strong><button class="tool-button" id="affirmationButton">Another one ✦</button></div>
+        <div class="wish-tool"><span class="tool-label">Birthday wish generator</span><strong id="wishText">May this year open beautiful doors for you.</strong><button class="tool-button" id="wishGenerator">Make a wish ✨</button></div>
+      </div>
+    </section>
+
+    <section class="section mom-section">
+      <div class="section-label">06 / Something I appreciate</div>
+      <div class="mom-card">
+        <details class="expandable mom-details">
+          <summary><span class="summary-copy"><b class="summary-kicker">A little gratitude</b><strong>For the woman behind your strength</strong><small>Something I want you to know</small></span><span class="summary-seal">♡</span></summary>
+          <div class="expandable-content">
+        <div class="mom-mark">♡</div>
+        <h2>I’m grateful<br>for your <em>mom</em></h2>
+        <p>While celebrating you today, Prisilla, I also want to appreciate the woman who brought you into this world.</p>
+        <p>I’m grateful to your mom for carrying you, loving you, and raising you with strength and care. Raising a child is never easy, and I can only imagine the sacrifices, prayers, patience, and courage it took to guide you to where you are today.</p>
+        <p>The beautiful, determined, dedicated, and kind woman I love is a reflection of the love and guidance she gave you. In many ways, the person you are today is part of her beautiful legacy.</p>
+        <p>I truly respect and appreciate your mom for everything she has done for you. I’m thankful that through her love and strength, I get to know someone as special as you.</p>
+        <p class="mom-signoff">With love and appreciation,<br><strong>Brighton</strong></p>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <section class="section prayer-section" id="prayer">
+      <div class="section-label">07 / A birthday prayer</div>
+      <div class="prayer-card">
+        <details class="expandable prayer-details">
+          <summary><span class="summary-copy"><b class="summary-kicker">A blessing for your new year</b><strong>Open your birthday prayer</strong><small>With faith, hope, and love</small></span><span class="summary-seal">✦</span></summary>
+          <div class="expandable-content">
+        <div class="prayer-mark">✦</div>
+        <h2>My prayer<br><em>for you</em></h2>
+        <p>May God bless you with another beautiful year filled with peace, happiness, good health, and endless reasons to smile.</p>
+        <p>May He guide your steps, bless your dedication to school, and take you higher than you ever imagined. May your hard work be rewarded, your dreams come true, and your heart always feel loved.</p>
+        <p>May this new chapter bring you closer to everything you are praying for. Amen. 🤍</p>
+        <p class="prayer-signoff">With all my love,<br><strong>Brighton</strong></p>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <section class="section music-section">
+      <div class="music-note">♫</div>
+      <p class="eyebrow">A song for your birthday</p>
+      <h2>Birthday Prayer<br><em>by Godswill James</em></h2>
+      <p>Press play and let this beautiful birthday blessing be part of your special day.</p>
+      <div class="video-wrap"><iframe src="https://www.youtube-nocookie.com/embed/IiNZeHV0an4" title="Birthday Prayer by Godswill James" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+      <a class="music-link" href="https://www.youtube.com/watch?v=IiNZeHV0an4" target="_blank" rel="noopener">Open on YouTube ↗</a>
+    </section>
+
+    <section class="section finale-section" id="wish">
+      <div class="gift" id="gift">🎁</div>
+      <p class="eyebrow">One last thing...</p>
+      <h2>Make a wish,<br><em>my love.</em></h2>
+      <p>And if your wish happens to include me, I promise I’m not going anywhere.</p>
+      <button class="primary" id="wishButton">Make a wish ✨</button>
+      <p class="final-message" id="finalMessage">Happy birthday, Prisilla. I love you endlessly. ♥</p>
+    </section>
+  </main>
+  <footer>Made with love by Brighton, just for Prisilla · <span id="year"></span></footer>
+  <script src="script.js"></script>
+</body>
+</html>
